@@ -170,7 +170,7 @@ Because you're not using the native ImGui back-end cursor modification behaviour
 
 ```cpp
 ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange; // disable ImGui attempting to change the cursor itself
-ImGui::GetIO().Fonts->Flags |= ImFontAtlasFlags_NoMouseCursors; // don't take up font atlas space with mouse cursor images 
+ImGui::GetIO().Fonts->Flags |= ImFontAtlasFlags_NoMouseCursors;     // don't take up font atlas space with mouse cursor images 
 ```
 
 ## Other useful libraries
