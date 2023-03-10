@@ -130,6 +130,42 @@ Avoid calling the getter functions on a frame by frame basis, only using them if
 
 ## Using with ImGui
 
+ImGui attempts to modify cursors by default - it's possible to tie in this library with ImGui for easy cursor changes in-browser.  The following is all that's needed, after you've finished rendering all other ImGui windows:
+
+```cpp
+if(ImGui::GetIO().WantCaptureMouse) {
+    switch(ImGui::GetMouseCursor()) {
+    case ImGuiMouseCursor_Arrow:
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::cursor_default);
+      break;
+    case ImGuiMouseCursor_TextInput:                                              // When hovering over InputText, etc.
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::text);
+      break;
+    case ImGuiMouseCursor_ResizeAll:                                              // (Unused by Dear ImGui functions)
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::move);
+      break;
+    case ImGuiMouseCursor_ResizeNS:                                               // When hovering over a horizontal border
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::ns_resize);
+      break;
+    case ImGuiMouseCursor_ResizeEW:                                               // When hovering over a vertical border or a column
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::ew_resize);
+      break;
+    case ImGuiMouseCursor_ResizeNESW:                                             // When hovering over the bottom-left corner of a window
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::nesw_resize);
+      break;
+    case ImGuiMouseCursor_ResizeNWSE:                                             // When hovering over the bottom-right corner of a window
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::nwse_resize);
+      break;
+    case ImGuiMouseCursor_Hand:                                                   // (Unused by Dear ImGui functions. Use for e.g. hyperlinks)
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::pointer);
+      break;
+    case ImGuiMouseCursor_NotAllowed:                                             // When hovering something with disallowed interaction. Usually a crossed circle.
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::not_allowed);
+      break;
+    }
+  }
+```
+
 ## Other useful libraries
 
 You may also find the following Emscripten helper libraries useful:
