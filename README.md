@@ -130,10 +130,9 @@ Avoid calling the getter functions on a frame by frame basis, only using them if
 
 ## Using with ImGui
 
-
 ## Other useful libraries
 
 You may also find the following Emscripten helper libraries useful:
 
 - [Emscripten Browser File Library](https://github.com/Armchair-Software/emscripten-browser-file) - allows you to transfer files using the browser upload / download interface, into memory in your C++ program.
-- [Emscripten Browser Clipboard Library](https://github.com/Armchair-Software/emscripten-browser-clipboard) - allows easy handling of browser copy and paste events in your C++ code.
+- [Emscripten Browser Clipboard Library](https://github.com/Armchair-Software/emscripten-browser-clipboard) - easy handling of browser copy and paste events in your C++ code.
