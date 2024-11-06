@@ -1,5 +1,4 @@
-#ifndef EMSCRIPTEN_BROWSER_CURSOR_H_INCLUDED
-#define EMSCRIPTEN_BROWSER_CURSOR_H_INCLUDED
+#pragma once
 
 #include <emscripten.h>
 
@@ -309,7 +308,4 @@ void set(cursor new_cursor) {
   }
 }
 
-
 }
-
-#endif // EMSCRIPTEN_BROWSER_CURSOR_H_INCLUDED
