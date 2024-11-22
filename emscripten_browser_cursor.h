@@ -79,8 +79,7 @@ bool is_set() {
 std::string get_string() {
   /// Return the current cursor setting as a string
   auto cursor_str_ptr{reinterpret_cast<char*>(EM_ASM_PTR(
-    cursor_str_ptr = allocateUTF8(document.body.style.cursor);
-    return cursor_str_ptr;
+    return stringToNewUTF8(document.body.style.cursor);
   ))};
   std::string const cursor_str{cursor_str_ptr};
   free(cursor_str_ptr);
