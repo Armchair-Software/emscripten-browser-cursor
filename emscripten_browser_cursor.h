@@ -85,7 +85,7 @@ inline std::string get_string() {
     return stringToNewUTF8(document.body.style.cursor);
   ))};
   std::string const cursor_str{cursor_str_ptr};
-  free(cursor_str_ptr);
+  std::free(cursor_str_ptr);
   return cursor_str;
 }
 
