@@ -1,9 +1,9 @@
 #pragma once
 
-#include <emscripten.h>
 #include <cstdlib>
 #include <optional>
 #include <string>
+#include <emscripten.h>
 
 namespace emscripten_browser_cursor {
 
