@@ -17,7 +17,7 @@ void emscripten_browser_cursor::set(cursor new_cursor)                // set a n
 void emscripten_browser_cursor::set(std::optional<cursor> new_cursor) // set a new cursor from an optional (passing std::nullopt unsets)
 void emscripten_browser_cursor::set(std::string const &new_cursor)    // set a new cursor from an arbitrary string value
 
-void unset();                                                         // clear the current cursor setting
+void emscripten_browser_cursor::unset();                              // clear the current cursor setting
 ```
 
 ## Cursor enums
@@ -61,10 +61,10 @@ This is especially useful if you wish to store a state where a custom cursor may
 std::optional<emscripten_browser_cursor::cursor> new_cursor;
 if(show_help) {
   new_cursor = emscripten_browser_cursor::cursor::help;
-} elif(edit_text) {
+} else if(edit_text) {
   new_cursor = emscripten_browser_cursor::cursor::text;
 }
-emscripten_browser_cursor::set(cursor); // if show_help and edit_text are both false, this will unset the custom cursor, returning it to default behaviour
+emscripten_browser_cursor::set(new_cursor); // if show_help and edit_text are both false, this will unset the custom cursor, returning it to default behaviour
 ```
 
 ### set(std::string)
@@ -86,7 +86,7 @@ emscripten_browser_cursor::set("progress"); // set the "progress" cursor as a st
 ### unset()
 
 ```cpp
-void unset();                                                         // clear the current cursor setting
+void emscripten_browser_cursor::unset();                              // clear the current cursor setting
 ```
 
 Unsets the current cursor setting, if there is one, returning the state to default with no cursor specified.  Note that unset is a fundamentally different state from being set to "auto" or the "default" cursors, although a given browser might behave the same way for each mode.

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <emscripten.h>
+#include <cstdlib>
+#include <optional>
+#include <string>
 
 namespace emscripten_browser_cursor {
 
@@ -69,14 +72,14 @@ void unset();                                                                   
 
 //////////////////////////////// Implementation ////////////////////////////////
 
-bool is_set() {
+inline bool is_set() {
   /// Returns whether the cursor is currently set
   return EM_ASM_INT(
     return !(!document.body.style.cursor || document.body.style.cursor.length === 0 );
   );
 }
 
-std::string get_string() {
+inline std::string get_string() {
   /// Return the current cursor setting as a string
   auto cursor_str_ptr{reinterpret_cast<char*>(EM_ASM_PTR(
     return stringToNewUTF8(document.body.style.cursor);
@@ -86,7 +89,7 @@ std::string get_string() {
   return cursor_str;
 }
 
-void set(std::optional<cursor> new_cursor) {
+inline void set(std::optional<cursor> new_cursor) {
   /// Set a new cursor from an optional - passing std::nullopt unsets the cursor
   if(new_cursor) {
     set(new_cursor.value());
@@ -95,21 +98,21 @@ void set(std::optional<cursor> new_cursor) {
   }
 }
 
-void set(std::string const &new_cursor) {
+inline void set(std::string const &new_cursor) {
   /// Set the cursor from an arbitrary string
   EM_ASM({
     document.body.style.cursor = UTF8ToString($0);
   }, new_cursor.c_str());
 }
 
-void unset() {
+inline void unset() {
   /// Remove the cursor setting
   EM_ASM(
     document.body.style.cursor = "";
   );
 }
 
-std::optional<cursor> get() {
+inline std::optional<cursor> get() {
   /// Return the current cursor setting as an optional enum - returns nullopt for unknown types
   auto cursor_str{get_string()};
   if(cursor_str.empty()) {
@@ -193,7 +196,7 @@ std::optional<cursor> get() {
   }
 }
 
-void set(cursor new_cursor) {
+inline void set(cursor new_cursor) {
   /// Set the cursor according to the given enum
   switch(new_cursor) {
   case cursor::cursor_auto:
