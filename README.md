@@ -133,8 +133,16 @@ Avoid calling the getter functions on a frame by frame basis, only using them if
 ImGui attempts to modify cursors by default - it's possible to tie in this library with ImGui for easy cursor changes in-browser.  The following is all that's needed, after you've finished rendering all other ImGui windows:
 
 ```cpp
+// In the render loop, after ImGui::Render():
+static std::optional<std::string> cursor_before_imgui;                           // cursor state before ImGui took control - must persist across frames
 if(ImGui::GetIO().WantCaptureMouse) {
+    if(!cursor_before_imgui) {
+        cursor_before_imgui = emscripten_browser_cursor::get_string();            // save current cursor on entry, including if it was previously unset (empty string)
+    }
     switch(ImGui::GetMouseCursor()) {
+    case ImGuiMouseCursor_None:                                                   // ImGui wants to hide the cursor (e.g. when rendering a software cursor)
+      emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::none);
+      break;
     case ImGuiMouseCursor_Arrow:
       emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::cursor_default);
       break;
@@ -163,7 +171,10 @@ if(ImGui::GetIO().WantCaptureMouse) {
       emscripten_browser_cursor::set(emscripten_browser_cursor::cursor::not_allowed);
       break;
     }
-  }
+} else if(cursor_before_imgui) {
+    emscripten_browser_cursor::set(*cursor_before_imgui);                         // restore previous cursor on exit (passing an empty string is equivalent to unset)
+    cursor_before_imgui = std::nullopt;
+}
 ```
 
 Because you're not using the native ImGui back-end cursor modification behaviour, it also makes sense to disable the associated functionality during your setup:
