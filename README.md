@@ -138,7 +138,7 @@ std::optional<std::string> cursor_before_imgui; // cursor state before ImGui too
 // In the render loop, after ImGui::Render():
 if(ImGui::GetIO().WantCaptureMouse) {
     if(!cursor_before_imgui) {
-      cursor_before_imgui = emscripten_browser_cursor::get_string();              // save current cursor on entry, including if it was previously unset (empty string)
+        cursor_before_imgui = emscripten_browser_cursor::get_string();            // save current cursor on entry, including if it was previously unset (empty string)
     }
     switch(ImGui::GetMouseCursor()) {
     case ImGuiMouseCursor_None:                                                   // ImGui wants to hide the cursor (e.g. when rendering a software cursor)
