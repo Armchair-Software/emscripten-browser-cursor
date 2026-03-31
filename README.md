@@ -133,9 +133,8 @@ Avoid calling the getter functions on a frame by frame basis, only using them if
 ImGui attempts to modify cursors by default - it's possible to tie in this library with ImGui for easy cursor changes in-browser.  The following is all that's needed, after you've finished rendering all other ImGui windows:
 
 ```cpp
-std::optional<std::string> cursor_before_imgui; // cursor state before ImGui took control
-
 // In the render loop, after ImGui::Render():
+static std::optional<std::string> cursor_before_imgui;                           // cursor state before ImGui took control - must persist across frames
 if(ImGui::GetIO().WantCaptureMouse) {
     if(!cursor_before_imgui) {
         cursor_before_imgui = emscripten_browser_cursor::get_string();            // save current cursor on entry, including if it was previously unset (empty string)
